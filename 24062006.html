@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Um presente para você</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to bottom right, #ffcccb, #ffb6c1);
+      color: #8B0000;
+      overflow: hidden;
+    }
+
+    .centered {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    button {
+      padding: 12px 24px;
+      background-color: #8B0000;
+      border: none;
+      border-radius: 20px;
+      color: white;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+      background-color: #a30000;
+      transform: scale(1.05);
+    }
+
+    .message {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .message h2 {
+      font-size: 2.5em;
+      animation: pop 1s ease-out forwards;
+    }
+
+    .message p {
+      font-size: 1.4em;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeIn 2s ease-in 1s forwards;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .hearts {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .heart {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: #8B0000;
+      transform: rotate(-45deg);
+      animation: float 6s infinite ease-in-out;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: #8B0000;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -15px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 15px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(-45deg);
+        opacity: 0;
+      }
+      30% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(-45deg);
+        opacity: 0;
+      }
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="centered" id="start-screen">
+    <h1>🎁 Você recebeu um presente</h1>
+    <p>Toque no botão abaixo para abrir</p>
+    <button onclick="startExperience()">Abrir Presente</button>
+  </div>
+
+  <!-- Tela principal da mensagem -->
+  <div class="centered hidden" id="main-screen">
+    <div class="message">
+      <h2>Feliz Aniversário Maria❤️🥳! </h2>
+      <p>O que dizer de você né kk, você é uma pessoa incrível, dedicada a melhor pessoa do mundo<br>eu tentei não gostar de você, mas você me fez gostar mais de mim, você é perfeita❤️🥳🎉🎂</p>
+      <footer>— Com carinho e respeito marcello</footer>
+    </div>
+    <div class="hearts" id="hearts"></div>
+  </div>
+
+  <!-- Trilha sonora opcional -->
+  <audio id="music" src="" loop></audio>
+
+  <script>
+    function startExperience() {
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('main-screen').classList.remove('hidden');
+
+      // Corações
+      const heartsContainer = document.getElementById('hearts');
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+        heart.style.animationDelay = (Math.random() * 3) + 's';
+        heartsContainer.appendChild(heart);
+      }
+
+      // Música suave
+      const music = document.getElementById('music');
+      music.volume = 0.3;
+      music.play().catch(() => {
+        console.log("Autoplay bloqueado, a música tocará após interação.");
+      });
+    }
+  </script>
+
+</body>
+</html>
